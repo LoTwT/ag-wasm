@@ -1,0 +1,94 @@
+{
+  "name": "ag-wasm",
+  "version": "0.0.0",
+  "description": "ag-wasm",
+  "type": "module",
+  "packageManager": "pnpm@8.15.5",
+  "author": "LoTwT <l709937065@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/LoTwT/ag-wasm#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LoTwT/ag-wasm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/LoTwT/ag-wasm/issues"
+  },
+  "keywords": [],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "require": "./dist/index.web.js",
+      "import": "./dist/index.web.js"
+    },
+    "./node": {
+      "require": "./dist/index.node.js",
+      "import": "./dist/index.node.js"
+    },
+    "./bundler": {
+      "require": "./dist/index.bundler.js",
+      "import": "./dist/index.bundler.js"
+    },
+    "./*": [
+      "./*",
+      "./*.d.ts"
+    ]
+  },
+  "main": "./dist/index.web.js",
+  "module": "./dist/index.web.js",
+  "types": "./dist/index.web.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*",
+        "./*"
+      ]
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "pnpm run wp:build && rimraf dist && tsx scripts/build.ts",
+    "lint": "eslint .",
+    "prepare": "simple-git-hooks",
+    "prepublishOnly": "pnpm build",
+    "prettier": "prettier --write .",
+    "release": "bumpp && pnpm publish",
+    "up": "taze latest -I -f",
+    "wp": "wasm-pack",
+    "wp:build": "rimraf pkg && pnpm run wpb:web && pnpm run wpb:node && pnpm run wpb:bundler",
+    "wpb:bundler": "wasm-pack build --target bundler --out-dir pkg/bundler --out-name index",
+    "wpb:node": "wasm-pack build --target nodejs --out-dir pkg/node --out-name index",
+    "wpb:web": "wasm-pack build --target web --out-dir pkg/web --out-name index"
+  },
+  "dependencies": {
+    "fs-extra": "^11.2.0"
+  },
+  "devDependencies": {
+    "@ayingott/eslint-config": "^0.8.3",
+    "@ayingott/prettier-config": "^0.2.2",
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^20.11.30",
+    "bumpp": "^9.4.0",
+    "eslint": "^8.57.0",
+    "lint-staged": "^15.2.2",
+    "pnpm": "^8.15.5",
+    "prettier": "^3.2.5",
+    "rimraf": "^5.0.5",
+    "simple-git-hooks": "^2.11.1",
+    "taze": "^0.13.3",
+    "tsx": "^4.7.1",
+    "typescript": "^5.4.3"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm exec lint-staged"
+  },
+  "lint-staged": {
+    "*": [
+      "eslint --fix",
+      "prettier --write --ignore-unknown"
+    ]
+  },
+  "prettier": "@ayingott/prettier-config"
+}
