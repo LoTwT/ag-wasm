@@ -14,39 +14,11 @@
   "bugs": {
     "url": "https://github.com/LoTwT/ag-wasm/issues"
   },
-  "keywords": [],
-  "sideEffects": false,
-  "exports": {
-    ".": {
-      "require": "./dist/index.web.js",
-      "import": "./dist/index.web.js"
-    },
-    "./node": {
-      "require": "./dist/index.node.js",
-      "import": "./dist/index.node.js"
-    },
-    "./bundler": {
-      "require": "./dist/index.bundler.js",
-      "import": "./dist/index.bundler.js"
-    },
-    "./*": [
-      "./*",
-      "./*.d.ts"
-    ]
-  },
-  "main": "./dist/index.web.js",
-  "module": "./dist/index.web.js",
-  "types": "./dist/index.web.d.ts",
-  "typesVersions": {
-    "*": {
-      "*": [
-        "./dist/*",
-        "./*"
-      ]
-    }
-  },
-  "files": [
-    "dist"
+  "keywords": [
+    "ast-grep",
+    "ast-grep-wasm",
+    "ag",
+    "ag-wasm"
   ],
   "scripts": {
     "build": "pnpm run wp:build && rimraf dist && tsx scripts/build.ts",
@@ -54,7 +26,7 @@
     "prepare": "simple-git-hooks",
     "prepublishOnly": "pnpm build",
     "prettier": "prettier --write .",
-    "release": "bumpp && pnpm publish",
+    "release": "bumpp --execute 'tsx scripts/post-bumpp.ts' && pnpm -C dist publish",
     "up": "taze latest -I -f",
     "wp": "wasm-pack",
     "wp:build": "rimraf pkg && pnpm run wpb:web && pnpm run wpb:node && pnpm run wpb:bundler",
@@ -63,7 +35,8 @@
     "wpb:web": "wasm-pack build --target web --out-dir pkg/web --out-name index"
   },
   "dependencies": {
-    "fs-extra": "^11.2.0"
+    "fs-extra": "^11.2.0",
+    "pkg-types": "^1.0.3"
   },
   "devDependencies": {
     "@ayingott/eslint-config": "^0.8.3",

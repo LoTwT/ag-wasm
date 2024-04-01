@@ -1,4 +1,9 @@
+import { resolve } from "node:path"
+import { fileURLToPath } from "node:url"
 import { copy, ensureDir } from "fs-extra"
+import { type PackageJson, readPackageJSON, writePackageJSON } from "pkg-types"
+
+const _dirname = fileURLToPath(new URL(".", import.meta.url))
 
 const filesMap = [
   // wasm
@@ -17,14 +22,69 @@ const filesMap = [
   // web
   ["pkg/web/index.js", "dist/index.web.js"],
   ["pkg/web/index.d.ts", "dist/index.web.d.ts"],
+
+  // shared
+  ["LICENSE", "LICENSE"],
+  ["README.md", "README.md"],
 ]
 
 async function build() {
   console.log("\n🚀 Start Building...\n")
 
   ensureDir("dist")
+  ensureDir("dist/dist")
 
-  await Promise.all(filesMap.map(([from, to]) => copy(from, to)))
+  await Promise.all(
+    filesMap.map(([from, to]) =>
+      copy(resolve(_dirname, "..", from), resolve(_dirname, "../dist", to)),
+    ),
+  )
+
+  const localPkgJson = await readPackageJSON()
+  const wasmPkgjSON = await readPackageJSON(resolve(_dirname, "../pkg/node"))
+
+  const publishPkgJson: PackageJson = {
+    name: localPkgJson.name,
+    description: localPkgJson.description,
+    type: "module",
+    author: localPkgJson.author,
+    license: localPkgJson.license,
+    homepage: localPkgJson.homepage,
+    repository: localPkgJson.repository,
+    bugs: localPkgJson.bugs,
+    keywords: localPkgJson.keywords,
+    files: ["dist"],
+    exports: {
+      ".": {
+        require: "./dist/index.web.js",
+        import: "./dist/index.web.js",
+      },
+      "./node": {
+        require: "./dist/index.node.js",
+        import: "./dist/index.node.js",
+      },
+      "./bundler": {
+        require: "./dist/index.bundler.js",
+        import: "./dist/index.bundler.js",
+      },
+      // @ts-ignore
+      "./*": ["./*", "./*.d.ts"],
+    },
+    main: "./dist/index.web.js",
+    module: "./dist/index.web.js",
+    types: "./dist/index.web.d.ts",
+    typesVersions: {
+      "*": {
+        "*": ["./dist/*", "./*"],
+      },
+    },
+    dependencies: wasmPkgjSON.dependencies,
+  }
+
+  await writePackageJSON(
+    resolve(_dirname, "../dist/package.json"),
+    publishPkgJson,
+  )
 
   console.log("\n📦 Finish Building...\n")
 }
