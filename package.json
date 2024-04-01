@@ -3,8 +3,12 @@
   "version": "0.0.3",
   "description": "ag-wasm",
   "type": "module",
+  "private": true,
   "packageManager": "pnpm@8.15.5",
   "author": "LoTwT <l709937065@gmail.com>",
+  "workspaces": [
+    "dist"
+  ],
   "license": "MIT",
   "homepage": "https://github.com/LoTwT/ag-wasm#readme",
   "repository": {
@@ -25,7 +29,7 @@
     "lint": "eslint .",
     "prepare": "simple-git-hooks",
     "prettier": "prettier --write .",
-    "release": "pnpm run build && bumpp --execute 'tsx scripts/post-bumpp.ts' && npm publish -w dist",
+    "release": "pnpm run build && bumpp --execute 'tsx scripts/post-bumpp.ts' && npm publish",
     "up": "taze latest -I -f",
     "wp": "wasm-pack",
     "wp:build": "rimraf pkg && pnpm run wpb:web && pnpm run wpb:node && pnpm run wpb:bundler",
