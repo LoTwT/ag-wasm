@@ -79,6 +79,9 @@ async function build() {
       },
     },
     dependencies: wasmPkgjSON.dependencies,
+    scripts: {
+      publish: "npm publish",
+    },
   }
 
   await writePackageJSON(
