@@ -7,8 +7,8 @@ const _dirname = fileURLToPath(new URL(".", import.meta.url))
 
 const filesMap = [
   // wasm
-  ["pkg/node/index_bg.wasm", "dist/index_bg.wasm"],
-  ["pkg/node/index_bg.wasm.d.ts", "dist/index_bg.wasm.d.ts"],
+  ["pkg/web/index_bg.wasm", "dist/index_bg.wasm"],
+  ["pkg/web/index_bg.wasm.d.ts", "dist/index_bg.wasm.d.ts"],
 
   // node
   ["pkg/node/index.js", "dist/index.node.js"],
