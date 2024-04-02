@@ -31,8 +31,8 @@ async function build() {
     .map((file) => [file, file.replace("pkg/", "dist/")])
     .map(([_, to]) => [
       _,
-      to.startsWith("dist/node") && to.endsWith(".js")
-        ? to.replace(/\.js$/, ".cjs")
+      to === "dist/node/index.js" || to === "dist/node/index.d.ts"
+        ? `${to.slice(0, -2)}c${to.slice(-2)}`
         : to,
     ])
 
