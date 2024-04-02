@@ -15,6 +15,7 @@ async function build() {
   console.log("\n🚀 Start Building...\n")
 
   ensureDir("dist")
+  ensureDir("dist/dist")
 
   const pkgFiles = (
     await fg("pkg/**/*", {
@@ -26,7 +27,7 @@ async function build() {
         "**/.gitignore",
       ],
     })
-  ).map((file) => [file, file.replace("pkg/", "")])
+  ).map((file) => [file, file.replace("pkg/", "dist/")])
 
   const files = [...sharedFiles, ...pkgFiles]
 
