@@ -35,6 +35,7 @@
     "wpb:web": "wasm-pack build --target web --out-dir pkg/web --out-name index"
   },
   "dependencies": {
+    "fast-glob": "^3.3.2",
     "fs-extra": "^11.2.0",
     "pkg-types": "^1.0.3"
   },
