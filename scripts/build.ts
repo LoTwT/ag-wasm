@@ -27,7 +27,14 @@ async function build() {
         "**/.gitignore",
       ],
     })
-  ).map((file) => [file, file.replace("pkg/", "dist/")])
+  )
+    .map((file) => [file, file.replace("pkg/", "dist/")])
+    .map(([_, to]) => [
+      _,
+      to.startsWith("dist/node") && to.endsWith(".js")
+        ? to.replace(/\.js$/, ".cjs")
+        : to,
+    ])
 
   const files = [...sharedFiles, ...pkgFiles]
 
@@ -58,8 +65,8 @@ async function build() {
         import: "./dist/web/index.js",
       },
       "./node": {
-        require: "./dist/node/index.js",
-        import: "./dist/node/index.js",
+        require: "./dist/node/index.cjs",
+        import: "./dist/node/index.cjs",
       },
       "./bundler": {
         require: "./dist/bundler/index.js",
