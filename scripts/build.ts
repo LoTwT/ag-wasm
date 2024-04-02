@@ -72,9 +72,18 @@ async function build() {
         require: "./dist/bundler/index.js",
         import: "./dist/bundler/index.js",
       },
-      "./wasm": "./dist/web/index_bg.wasm",
-      "./node/wasm": "./dist/node/index_bg.wasm",
-      "./bundler/wasm": "./dist/bundler/index_bg.wasm",
+      "./wasm": {
+        require: "./dist/web/index_bg.wasm",
+        import: "./dist/web/index_bg.wasm",
+      },
+      "./node/wasm": {
+        require: "./dist/node/index_bg.wasm",
+        import: "./dist/node/index_bg.wasm",
+      },
+      "./bundler/wasm": {
+        require: "./dist/bundler/index_bg.wasm",
+        import: "./dist/bundler/index_bg.wasm",
+      },
       // @ts-ignore
       "./*": ["./*", "./*.d.ts"],
     },
