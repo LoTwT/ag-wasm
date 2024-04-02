@@ -1,6 +1,6 @@
 {
   "name": "ag-wasm",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "ag-wasm",
   "type": "module",
   "private": true,
