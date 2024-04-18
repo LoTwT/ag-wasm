@@ -4,7 +4,7 @@
   "description": "ag-wasm",
   "type": "module",
   "private": true,
-  "packageManager": "pnpm@8.15.5",
+  "packageManager": "pnpm@9.0.2",
   "author": "LoTwT <l709937065@gmail.com>",
   "license": "MIT",
   "homepage": "https://github.com/LoTwT/ag-wasm#readme",
@@ -37,23 +37,23 @@
   "dependencies": {
     "fast-glob": "^3.3.2",
     "fs-extra": "^11.2.0",
-    "pkg-types": "^1.0.3"
+    "pkg-types": "^1.1.0"
   },
   "devDependencies": {
-    "@ayingott/eslint-config": "^0.8.3",
-    "@ayingott/prettier-config": "^0.2.2",
+    "@ayingott/eslint-config": "^0.9.0",
+    "@ayingott/prettier-config": "^0.3.0",
     "@types/fs-extra": "^11.0.4",
-    "@types/node": "^20.11.30",
+    "@types/node": "^20.12.7",
     "bumpp": "^9.4.0",
-    "eslint": "^8.57.0",
+    "eslint": "^9.0.0",
     "lint-staged": "^15.2.2",
-    "pnpm": "^8.15.5",
+    "pnpm": "^9.0.2",
     "prettier": "^3.2.5",
     "rimraf": "^5.0.5",
     "simple-git-hooks": "^2.11.1",
-    "taze": "^0.13.3",
-    "tsx": "^4.7.1",
-    "typescript": "^5.4.3"
+    "taze": "^0.13.6",
+    "tsx": "^4.7.2",
+    "typescript": "^5.4.5"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm exec lint-staged"
