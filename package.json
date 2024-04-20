@@ -1,5 +1,6 @@
 {
   "name": "ag-wasm-monorepo",
+  "version": "0.1.0",
   "description": "ag-wasm",
   "type": "module",
   "private": true,
