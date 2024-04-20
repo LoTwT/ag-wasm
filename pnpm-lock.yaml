@@ -70,23 +70,23 @@ importers:
   playground:
     dependencies:
       ag-wasm:
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../packages/ag-wasm
       vue:
-        specifier: ^3.4.21
+        specifier: ^3.4.23
         version: 3.4.23(typescript@5.4.5)
     devDependencies:
       '@vitejs/plugin-vue':
         specifier: ^5.0.4
         version: 5.0.4(vite@5.2.10(@types/node@20.12.7))(vue@3.4.23(typescript@5.4.5))
       typescript:
-        specifier: ^5.2.2
+        specifier: ^5.4.5
         version: 5.4.5
       vite:
-        specifier: ^5.2.0
+        specifier: ^5.2.10
         version: 5.2.10(@types/node@20.12.7)
       vue-tsc:
-        specifier: ^2.0.6
+        specifier: ^2.0.13
         version: 2.0.13(typescript@5.4.5)
 
 packages:

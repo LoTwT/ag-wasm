@@ -3,7 +3,6 @@
   "version": "0.1.1",
   "description": "ag-wasm",
   "type": "module",
-  "packageManager": "pnpm@9.0.4",
   "author": "LoTwT <l709937065@gmail.com>",
   "license": "MIT",
   "homepage": "https://github.com/LoTwT/ag-wasm#readme",
