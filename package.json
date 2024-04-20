@@ -7,6 +7,7 @@
   "scripts": {
     "build": "pnpm run wp:build && tsx scripts/build.ts",
     "lint": "eslint .",
+    "play": "pnpm -C playground run dev",
     "prepare": "simple-git-hooks",
     "prettier": "prettier --write .",
     "release": "pnpm run build && bumpp -r && pnpm -r publish",
