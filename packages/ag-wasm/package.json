@@ -1,0 +1,73 @@
+{
+  "name": "ag-wasm",
+  "version": "0.1.0",
+  "description": "ag-wasm",
+  "type": "module",
+  "packageManager": "pnpm@9.0.4",
+  "author": "LoTwT <l709937065@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/LoTwT/ag-wasm#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LoTwT/ag-wasm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/LoTwT/ag-wasm/issues"
+  },
+  "keywords": [
+    "ast-grep",
+    "ast-grep-wasm",
+    "ag",
+    "ag-wasm"
+  ],
+  "sideEffects": [
+    "**/*.wasm"
+  ],
+  "exports": {
+    ".": {
+      "require": "./dist/web/index.js",
+      "import": "./dist/web/index.js"
+    },
+    "./node": {
+      "require": "./dist/node/index.cjs",
+      "import": "./dist/node/index.cjs"
+    },
+    "./bundler": {
+      "require": "./dist/bundler/index.js",
+      "import": "./dist/bundler/index.js"
+    },
+    "./wasm": {
+      "require": "./dist/web/index_bg.wasm",
+      "import": "./dist/web/index_bg.wasm"
+    },
+    "./node/wasm": {
+      "require": "./dist/node/index_bg.wasm",
+      "import": "./dist/node/index_bg.wasm"
+    },
+    "./bundler/wasm": {
+      "require": "./dist/bundler/index_bg.wasm",
+      "import": "./dist/bundler/index_bg.wasm"
+    },
+    "./*": [
+      "./*",
+      "./*.d.ts"
+    ]
+  },
+  "main": "./dist/web/index.js",
+  "module": "./dist/web/index.js",
+  "types": "./dist/web/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*",
+        "./*"
+      ]
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "web-tree-sitter-wasm-bindgen": "0.20.8"
+  }
+}

@@ -1,32 +1,15 @@
 {
-  "name": "ag-wasm",
-  "version": "0.1.0",
+  "name": "ag-wasm-monorepo",
   "description": "ag-wasm",
   "type": "module",
   "private": true,
   "packageManager": "pnpm@9.0.4",
-  "author": "LoTwT <l709937065@gmail.com>",
-  "license": "MIT",
-  "homepage": "https://github.com/LoTwT/ag-wasm#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/LoTwT/ag-wasm.git"
-  },
-  "bugs": {
-    "url": "https://github.com/LoTwT/ag-wasm/issues"
-  },
-  "keywords": [
-    "ast-grep",
-    "ast-grep-wasm",
-    "ag",
-    "ag-wasm"
-  ],
   "scripts": {
-    "build": "pnpm run wp:build && rimraf dist && tsx scripts/build.ts",
+    "build": "pnpm run wp:build && tsx scripts/build.ts",
     "lint": "eslint .",
     "prepare": "simple-git-hooks",
     "prettier": "prettier --write .",
-    "release": "pnpm run build && bumpp --execute 'tsx scripts/post-bumpp.ts' && pnpm -C dist run release",
+    "release": "pnpm run build && bumpp -r && pnpm -r publish",
     "up": "taze latest -I -f",
     "wp": "wasm-pack",
     "wp:build": "rimraf pkg && pnpm run wpb:web && pnpm run wpb:node && pnpm run wpb:bundler",
@@ -36,8 +19,7 @@
   },
   "dependencies": {
     "fast-glob": "^3.3.2",
-    "fs-extra": "^11.2.0",
-    "pkg-types": "^1.1.0"
+    "fs-extra": "^11.2.0"
   },
   "devDependencies": {
     "@ayingott/eslint-config": "^0.9.0",
@@ -45,7 +27,7 @@
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^20.12.7",
     "bumpp": "^9.4.0",
-    "eslint": "^9.0.0",
+    "eslint": "^9.1.0",
     "lint-staged": "^15.2.2",
     "pnpm": "^9.0.4",
     "prettier": "^3.2.5",
