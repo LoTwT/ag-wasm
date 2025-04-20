@@ -11,7 +11,7 @@
     "play": "pnpm -C playground run dev",
     "prepare": "simple-git-hooks",
     "prettier": "prettier --write .",
-    "release": "pnpm run build && bumpp -r && pnpm -r publish",
+    "release": "pnpm run build && bumpp && pnpm -r publish",
     "up": "taze latest -I -f -r",
     "wp": "wasm-pack",
     "wp:build": "rimraf pkg && pnpm run wpb:web && pnpm run wpb:node && pnpm run wpb:bundler",
