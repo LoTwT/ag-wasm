@@ -2,15 +2,15 @@ mod dump_tree;
 mod utils;
 mod wasm_lang;
 
-use dump_tree::{dump_one_node, DumpNode};
+use dump_tree::{dump_one_node, dump_pattern as dump_pattern_impl, DumpNode};
 use utils::WasmMatch;
 use wasm_lang::{WasmDoc, WasmLang};
 
 use ast_grep_config::{CombinedScan, RuleConfig, SerializableRuleConfig};
-use ast_grep_core::language::Language;
 use ast_grep_core::{AstGrep, Node as SgNode};
 use serde_wasm_bindgen::from_value as from_js_val;
 use std::collections::HashMap;
+use std::error::Error;
 use tree_sitter as ts;
 use wasm_bindgen::prelude::*;
 
@@ -34,20 +34,22 @@ pub fn find_nodes(src: String, configs: Vec<JsValue>) -> Result<JsValue, JsError
   let lang = WasmLang::get_current();
   let mut rules = vec![];
   for config in configs {
-    let config: SerializableRuleConfig<WasmLang> = from_js_val(config)?;
-    let finder = RuleConfig::try_from(config, &Default::default())?;
+    let finder = try_get_rule_config(config)?;
     rules.push(finder);
   }
   let combined = CombinedScan::new(rules.iter().collect());
-  let root = lang.ast_grep(src);
-  let sets = combined.find(&root);
+  let doc = WasmDoc::new(src.clone(), lang);
+  let root = AstGrep::doc(doc);
   let ret: HashMap<_, _> = combined
-    .scan(&root, sets, false)
+    .scan(&root, false)
+    .matches
     .into_iter()
-    .map(|(id, matches)| {
-      let rule = combined.get_rule(id).id.clone();
-      let matches: Vec<_> = matches.into_iter().map(WasmMatch::from).collect();
-      (rule, matches)
+    .map(|(rule, matches)| {
+      let matches: Vec<_> = matches
+        .into_iter()
+        .map(|m| WasmMatch::from_match(m, rule))
+        .collect();
+      (rule.id.clone(), matches)
     })
     .collect();
   let ret = serde_wasm_bindgen::to_value(&ret)?;
@@ -59,27 +61,24 @@ pub fn fix_errors(src: String, configs: Vec<JsValue>) -> Result<String, JsError>
   let lang = WasmLang::get_current();
   let mut rules = vec![];
   for config in configs {
-    let config: SerializableRuleConfig<WasmLang> = from_js_val(config)?;
-    let finder = RuleConfig::try_from(config, &Default::default())?;
+    let finder = try_get_rule_config(config)?;
     rules.push(finder);
   }
   let combined = CombinedScan::new(rules.iter().collect());
   let doc = WasmDoc::new(src.clone(), lang);
   let root = AstGrep::doc(doc);
-  let sets = combined.find(&root);
-  let diffs = combined.diffs(&root, sets);
+  let diffs = combined.scan(&root, true).diffs;
   if diffs.is_empty() {
     return Ok(src);
   }
   let mut start = 0;
   let src: Vec<_> = src.chars().collect();
   let mut new_content = Vec::<char>::new();
-  for (nm, idx) in diffs {
+  for (rule, nm) in diffs {
     let range = nm.range();
     if start > range.start {
       continue;
     }
-    let rule = combined.get_rule(idx);
     let fixer = rule
       .get_fixer()?
       .expect("rule returned by diff must have fixer");
@@ -110,8 +109,24 @@ pub fn dump_ast_nodes(src: String) -> Result<JsValue, JsError> {
   Ok(ret)
 }
 
-#[wasm_bindgen(js_name = preProcessPattern)]
-pub fn pre_process_pattern(query: String) -> Result<String, JsError> {
-  let lang = WasmLang::get_current();
-  Ok(lang.pre_process_pattern(&query).into())
+#[wasm_bindgen(js_name = dumpPattern)]
+pub fn dump_pattern(src: String, selector: Option<String>) -> Result<JsValue, JsError> {
+  let dumped = dump_pattern_impl(src, selector)?;
+  let ret = serde_wasm_bindgen::to_value(&dumped)?;
+  Ok(ret)
+}
+
+fn try_get_rule_config(config: JsValue) -> Result<RuleConfig<WasmLang>, JsError> {
+  let config: SerializableRuleConfig<WasmLang> = from_js_val(config)?;
+  RuleConfig::try_from(config, &Default::default()).map_err(dump_error)
+}
+
+fn dump_error(err: impl Error) -> JsError {
+  let mut errors = vec![err.to_string()];
+  let mut err: &dyn Error = &err;
+  while let Some(e) = err.source() {
+    errors.push(e.to_string());
+    err = e;
+  }
+  JsError::new(&format!("{}", errors.join("\n")))
 }

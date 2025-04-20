@@ -1,7 +1,9 @@
-use crate::wasm_lang::WasmLang;
+use crate::wasm_lang::{WasmDoc, WasmLang};
+use ast_grep_config::{Fixer, RuleConfig};
 use ast_grep_core::{
   meta_var::{MetaVarEnv, MetaVariable},
-  Node as SgNode, NodeMatch as SgNodeMatch, StrDoc,
+  replacer::Replacer,
+  Node as SgNode, NodeMatch as SgNodeMatch,
 };
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
@@ -17,8 +19,8 @@ pub fn set_panic_hook() {
   console_error_panic_hook::set_once();
 }
 
-type Node<'a> = SgNode<'a, StrDoc<WasmLang>>;
-type NodeMatch<'a> = SgNodeMatch<'a, StrDoc<WasmLang>>;
+type Node<'a> = SgNode<'a, WasmDoc>;
+type NodeMatch<'a> = SgNodeMatch<'a, WasmDoc>;
 
 #[derive(Serialize, Deserialize)]
 pub struct WasmNode {
@@ -28,21 +30,37 @@ pub struct WasmNode {
 
 #[derive(Serialize, Deserialize)]
 pub struct WasmMatch {
+  pub id: usize,
   pub node: WasmNode,
   pub env: BTreeMap<String, WasmNode>,
+  pub message: String,
 }
 
-impl From<NodeMatch<'_>> for WasmMatch {
-  fn from(nm: NodeMatch) -> Self {
+// TODO: move to ast-grep-core
+fn get_message(rule: &RuleConfig<WasmLang>, node: &NodeMatch) -> String {
+  let parsed = Fixer::from_str(&rule.message, &rule.language).expect("should work");
+  let bytes = parsed.generate_replacement(node);
+  bytes.into_iter().collect()
+}
+
+impl WasmMatch {
+  pub fn from_match(nm: NodeMatch, rule: &RuleConfig<WasmLang>) -> Self {
     let node = nm.get_node().clone();
+    let id = node.node_id();
     let node = WasmNode::from(node);
     let env = nm.get_env().clone();
     let env = env_to_map(env);
-    Self { node, env }
+    let message = get_message(rule, &nm);
+    Self {
+      node,
+      env,
+      message,
+      id,
+    }
   }
 }
 
-fn env_to_map(env: MetaVarEnv<'_, StrDoc<WasmLang>>) -> BTreeMap<String, WasmNode> {
+fn env_to_map(env: MetaVarEnv<'_, WasmDoc>) -> BTreeMap<String, WasmNode> {
   let mut map = BTreeMap::new();
   for id in env.get_matched_variables() {
     match id {
@@ -51,7 +69,7 @@ fn env_to_map(env: MetaVarEnv<'_, StrDoc<WasmLang>>) -> BTreeMap<String, WasmNod
           map.insert(name, WasmNode::from(node.clone()));
         } else if let Some(bytes) = env.get_transformed(&name) {
           let node = WasmNode {
-            text: String::from_utf8_lossy(bytes).to_string(),
+            text: bytes.iter().collect(),
             range: (0, 0, 0, 0),
           };
           map.insert(name, WasmNode::from(node));
@@ -68,7 +86,12 @@ fn env_to_map(env: MetaVarEnv<'_, StrDoc<WasmLang>>) -> BTreeMap<String, WasmNod
         let text = nodes.iter().map(|n| n.text()).collect();
         let node = WasmNode {
           text,
-          range: (start.0, start.1, end.0, end.1),
+          range: (
+            start.line(),
+            start.column(first),
+            end.line(),
+            end.column(last),
+          ),
         };
         map.insert(name, node);
       }
@@ -85,7 +108,7 @@ impl From<Node<'_>> for WasmNode {
     let end = nm.end_pos();
     Self {
       text: nm.text().to_string(),
-      range: (start.0, start.1, end.0, end.1),
+      range: (start.line(), start.column(&nm), end.line(), end.column(&nm)),
     }
   }
 }
