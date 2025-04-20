@@ -1,8 +1,8 @@
 import { resolve } from "node:path"
 import { fileURLToPath } from "node:url"
-import { rimraf } from "rimraf"
-import { copy, ensureDir } from "fs-extra"
 import fg from "fast-glob"
+import { copy, ensureDir } from "fs-extra"
+import { rimraf } from "rimraf"
 
 const _dirname = fileURLToPath(new URL(".", import.meta.url))
 

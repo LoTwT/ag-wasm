@@ -1,8 +1,8 @@
 {
   "name": "ag-wasm",
+  "type": "module",
   "version": "0.1.1",
   "description": "ag-wasm",
-  "type": "module",
   "author": "LoTwT <l709937065@gmail.com>",
   "license": "MIT",
   "homepage": "https://github.com/LoTwT/ag-wasm#readme",
@@ -24,28 +24,28 @@
   ],
   "exports": {
     ".": {
-      "require": "./dist/web/index.js",
-      "import": "./dist/web/index.js"
+      "import": "./dist/web/index.js",
+      "require": "./dist/web/index.js"
     },
     "./node": {
-      "require": "./dist/node/index.cjs",
-      "import": "./dist/node/index.cjs"
+      "import": "./dist/node/index.cjs",
+      "require": "./dist/node/index.cjs"
     },
     "./bundler": {
-      "require": "./dist/bundler/index.js",
-      "import": "./dist/bundler/index.js"
+      "import": "./dist/bundler/index.js",
+      "require": "./dist/bundler/index.js"
     },
     "./wasm": {
-      "require": "./dist/web/index_bg.wasm",
-      "import": "./dist/web/index_bg.wasm"
+      "import": "./dist/web/index_bg.wasm",
+      "require": "./dist/web/index_bg.wasm"
     },
     "./node/wasm": {
-      "require": "./dist/node/index_bg.wasm",
-      "import": "./dist/node/index_bg.wasm"
+      "import": "./dist/node/index_bg.wasm",
+      "require": "./dist/node/index_bg.wasm"
     },
     "./bundler/wasm": {
-      "require": "./dist/bundler/index_bg.wasm",
-      "import": "./dist/bundler/index_bg.wasm"
+      "import": "./dist/bundler/index_bg.wasm",
+      "require": "./dist/bundler/index_bg.wasm"
     },
     "./*": [
       "./*",

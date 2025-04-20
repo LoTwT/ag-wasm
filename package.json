@@ -1,10 +1,10 @@
 {
   "name": "ag-wasm-monorepo",
-  "version": "0.1.1",
-  "description": "ag-wasm",
   "type": "module",
+  "version": "0.1.1",
   "private": true,
-  "packageManager": "pnpm@9.0.4",
+  "packageManager": "pnpm@10.8.1",
+  "description": "ag-wasm",
   "scripts": {
     "build": "pnpm run wp:build && tsx scripts/build.ts",
     "lint": "eslint .",
@@ -20,25 +20,25 @@
     "wpb:web": "wasm-pack build --target web --out-dir pkg/web --out-name index"
   },
   "dependencies": {
-    "fast-glob": "^3.3.2",
-    "fs-extra": "^11.2.0"
+    "fast-glob": "^3.3.3",
+    "fs-extra": "^11.3.0"
   },
   "devDependencies": {
-    "@ayingott/eslint-config": "^0.9.0",
-    "@ayingott/prettier-config": "^0.3.0",
+    "@ayingott/eslint-config": "^2.0.1",
+    "@ayingott/prettier-config": "^2.1.2",
     "@types/fs-extra": "^11.0.4",
-    "@types/node": "^20.12.7",
-    "bumpp": "^9.4.0",
-    "eslint": "^9.1.0",
-    "lint-staged": "^15.2.2",
-    "pnpm": "^9.0.4",
-    "prettier": "^3.2.5",
-    "rimraf": "^5.0.5",
-    "simple-git-hooks": "^2.11.1",
-    "taze": "^0.13.6",
-    "tsx": "^4.7.2",
-    "typescript": "^5.4.5",
-    "wasm-pack": "^0.12.1"
+    "@types/node": "^22.14.1",
+    "bumpp": "^10.1.0",
+    "eslint": "^9.25.0",
+    "lint-staged": "^15.5.1",
+    "pnpm": "^10.8.1",
+    "prettier": "^3.5.3",
+    "rimraf": "^6.0.1",
+    "simple-git-hooks": "^2.12.1",
+    "taze": "^19.0.4",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.3",
+    "wasm-pack": "^0.13.1"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm exec lint-staged"

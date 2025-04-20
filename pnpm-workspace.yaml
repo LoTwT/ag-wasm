@@ -1,3 +1,9 @@
 packages:
   - packages/ag-wasm
   - playground
+
+onlyBuiltDependencies:
+  - esbuild
+  - simple-git-hooks
+  - unrs-resolver
+  - wasm-pack
