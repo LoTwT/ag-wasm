@@ -64,8 +64,8 @@ importers:
   packages/ag-wasm:
     dependencies:
       web-tree-sitter-sg:
-        specifier: ^0.22.2
-        version: 0.22.2
+        specifier: ^0.25.3
+        version: 0.25.3
 
   playground:
     dependencies:
@@ -2793,11 +2793,11 @@ packages:
     resolution: {integrity: sha512-P9exD4YkjpDbw68xUhF3MDm/CC/3eTmmthyG5bHJ56kalxOTewOunxTke4SyF8MTXV6jUtNjXggPgrGmMtczGg==}
     hasBin: true
 
-  web-tree-sitter-sg@0.22.2:
-    resolution: {integrity: sha512-44N4PXnTc48KcCvZf71ChgeRCnIIQ7FbktO1/674swkJnSUsJZdnlCMrZKZBOe1FchjAePLc4KkxN7ITD/TX1A==}
+  web-tree-sitter-sg@0.25.3:
+    resolution: {integrity: sha512-pXf0xwSrzcbP8fRTHrrnkSG1Drn1IgWlSaKJ+MoUALITdzubb80h/bEaz2vlhBtlI7VezX9ESdkRhhUb9b/XCg==}
 
-  web-tree-sitter@0.22.6:
-    resolution: {integrity: sha512-hS87TH71Zd6mGAmYCvlgxeGDjqd9GTeqXNqTT+u0Gs51uIozNIaaq/kUAbV/Zf56jb2ZOyG8BxZs2GG9wbLi6Q==}
+  web-tree-sitter@0.25.3:
+    resolution: {integrity: sha512-e0hdXG+nJ18Zd/QJFhSx0DNTSMz7miwUjKyJ/lglTnZo6ke08++BQzXkaeaqnGJFi9qq+nPJg2L8hYAjduToHQ==}
 
   which@2.0.2:
     resolution: {integrity: sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==}
@@ -5783,11 +5783,11 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  web-tree-sitter-sg@0.22.2:
+  web-tree-sitter-sg@0.25.3:
     dependencies:
-      web-tree-sitter: 0.22.6
+      web-tree-sitter: 0.25.3
 
-  web-tree-sitter@0.22.6: {}
+  web-tree-sitter@0.25.3: {}
 
   which@2.0.2:
     dependencies:
