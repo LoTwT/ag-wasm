@@ -25,14 +25,13 @@ async function build() {
         "**/.gitignore",
       ],
     })
-  )
-    .map((file) => [file, file.replace("pkg/", "")])
-    .map(([_, to]) => [
-      _,
-      to === "node/index.js" || to === "node/index.d.ts"
-        ? `${to.slice(0, -2)}c${to.slice(-2)}`
-        : to,
-    ])
+  ).map((file) => [file, file.replace("pkg/", "")])
+  // .map(([_, to]) => [
+  //   _,
+  //   to === "node/index.js" || to === "node/index.d.ts"
+  //     ? `${to.slice(0, -2)}c${to.slice(-2)}`
+  //     : to,
+  // ])
 
   await Promise.all(
     pkgFiles.map(([from, to]) =>

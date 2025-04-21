@@ -20,33 +20,13 @@
     "ag-wasm"
   ],
   "sideEffects": [
-    "**/*.wasm"
+    "./dist/bundler/index.js",
+    "./snippets/*"
   ],
   "exports": {
-    ".": {
-      "import": "./dist/web/index.js",
-      "require": "./dist/web/index.js"
-    },
-    "./node": {
-      "import": "./dist/node/index.cjs",
-      "require": "./dist/node/index.cjs"
-    },
-    "./bundler": {
-      "import": "./dist/bundler/index.js",
-      "require": "./dist/bundler/index.js"
-    },
-    "./wasm": {
-      "import": "./dist/web/index_bg.wasm",
-      "require": "./dist/web/index_bg.wasm"
-    },
-    "./node/wasm": {
-      "import": "./dist/node/index_bg.wasm",
-      "require": "./dist/node/index_bg.wasm"
-    },
-    "./bundler/wasm": {
-      "import": "./dist/bundler/index_bg.wasm",
-      "require": "./dist/bundler/index_bg.wasm"
-    },
+    ".": "./dist/web/index.js",
+    "./node": "./dist/node/index.js",
+    "./bundler": "./dist/bundler/index.js",
     "./*": [
       "./*",
       "./*.d.ts"
