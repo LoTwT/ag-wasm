@@ -1,12 +1,15 @@
 <script setup lang="ts">
-import init, { initializeTreeSitter, setupParser, dumpASTNodes } from "ag-wasm"
+import {
+  initializeTreeSitter,
+  setupParser,
+  dumpASTNodes,
+} from "ag-wasm/bundler"
 import { ref, watch } from "vue"
 
-await init()
 await initializeTreeSitter()
 await setupParser("typescript", "tree-sitter-typescript.wasm")
 
-const code = ref("cosnt one = 1")
+const code = ref(`export const bundler = "ag-wasm/bundler"`)
 const data = ref()
 
 watch(
@@ -22,5 +25,5 @@ watch(
 
 <template>
   <textarea v-model="code"></textarea>
-  <div>data: {{ data }}</div>
+  <div>output: {{ data }}</div>
 </template>
