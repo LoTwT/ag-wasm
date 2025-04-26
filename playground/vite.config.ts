@@ -6,7 +6,7 @@ import wasm from "vite-plugin-wasm"
 export default defineConfig({
   plugins: [wasm(), vue()],
   // optimizeDeps: {
-  //   include: ["ag-wasm > web-tree-sitter-sg"],
+  //   include: ["ag-wasm > web-tree-sitter"],
   //   exclude: ["ag-wasm"],
   // },
 })

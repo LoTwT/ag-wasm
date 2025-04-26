@@ -10,6 +10,7 @@ dependencies = [
  "ast-grep-core",
  "ast-grep-language",
  "console_error_panic_hook",
+ "js-sys",
  "once_cell",
  "serde",
  "serde-wasm-bindgen",
@@ -496,8 +497,6 @@ dependencies = [
 [[package]]
 name = "tree-sitter-facade-sg"
 version = "0.25.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b456912926c4079fb0e6d26e4282a588f93857fbb4d79e29c5eb1244b7100d55"
 dependencies = [
  "js-sys",
  "tree-sitter",
@@ -643,8 +642,6 @@ dependencies = [
 [[package]]
 name = "web-tree-sitter-sg"
 version = "0.25.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0c769bd29dd6612783fffb7090d29ed8b390672fb9e968b9e76bbc07bf78600c"
 dependencies = [
  "js-sys",
  "wasm-bindgen",

@@ -11,17 +11,22 @@ use ast_grep_core::{AstGrep, Node as SgNode};
 use serde_wasm_bindgen::from_value as from_js_val;
 use std::collections::HashMap;
 use std::error::Error;
-use tree_sitter as ts;
 use wasm_bindgen::prelude::*;
+
+#[cfg(target_arch = "wasm32")]
+use js_sys::Object;
+#[cfg(target_arch = "wasm32")]
+use tree_sitter as ts;
 
 type Node<'a> = SgNode<'a, WasmDoc>;
 
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
+#[cfg(target_arch = "wasm32")]
 #[wasm_bindgen(js_name = initializeTreeSitter)]
-pub async fn initialize_tree_sitter() -> Result<(), JsError> {
-  ts::TreeSitter::init().await
+pub async fn initialize_tree_sitter(options: Option<Object>) -> Result<(), JsError> {
+  ts::TreeSitter::init(options).await
 }
 
 #[wasm_bindgen(js_name = setupParser)]

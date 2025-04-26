@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import AgWasm from "./components/web.vue"
-import AgBundler from "./components/bundler.vue"
+// import AgBundler from "./components/bundler.vue"
 </script>
 
 <template>
@@ -10,9 +10,9 @@ import AgBundler from "./components/bundler.vue"
     <template #fallback>ag-wasm web loading...</template>
   </Suspense>
 
-  <h2>ag-wasm bundler</h2>
+  <!-- <h2>ag-wasm bundler</h2>
   <Suspense>
     <AgBundler />
     <template #fallback>ag-wasm bundler loading...</template>
-  </Suspense>
+  </Suspense> -->
 </template>
